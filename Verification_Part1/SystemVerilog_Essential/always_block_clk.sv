@@ -19,10 +19,16 @@ module tb();
  
   
   always #5 clk = ~clk; //100 MHz
-  
+
   always #10 clk50 = ~clk50;  ///50 MHz
-  
+
   always #20 clk25 = ~clk25;  ///25 MHz
+
+  // forever 寫法：等效於上方 always，初始化與 clock gen 合併在同一 initial 區塊
+  // initial begin
+  //   clk = 1'b0;
+  //   forever #5 clk = ~clk;  // 100 MHz
+  // end
   
   
   
