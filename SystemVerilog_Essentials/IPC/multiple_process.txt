@@ -1,0 +1,9 @@
+All of the component have independent tasks and execute then in parrel
+
+1. Generator : generate the data
+2. Driver : receive the data from generator and apply to DUT with interface
+3. Monitor : receive the response from DUT, and send data to the scoreboard
+4. Scoreboard : check golden data, received data from monitor are equal or not
+5. Env.
+6. Test
+7. Agent
