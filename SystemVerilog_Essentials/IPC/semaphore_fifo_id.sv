@@ -85,10 +85,6 @@ class main;
   
   resource_manager m;
   
-  int id_f;
-  int id_s;
-  int id_t;
-  
   int data_f;
   int data_s;
   int data_t;
@@ -102,57 +98,60 @@ class main;
   
   
   task first_run();
+    int local_id;
     // Occupy semaphore
-    m.get_resource(id_f);
+    m.get_resource(local_id);
     
     for (int i=0; i<2; i++) begin
       assert(f.randomize());
       data_f = f.data;
       f.display();
-      $display("First run and sem %0d occupied: data = %0d, time = %0t", id_f, data_f, $time);
+      $display("First run and sem %0d occupied: data = %0d, time = %0t", local_id, data_f, $time);
       #10;
     end
     
     // Release semaphore
-    m.release_resource(id_f);
-    $display("First sem uncooupied sem id %0d, time = %0t", id_f, $time);
+    m.release_resource(local_id);
+    $display("First sem uncooupied sem id %0d, time = %0t", local_id, $time);
     
   endtask
   
   
   task second_run();
+    int local_id;
     // Occupy semaphore
-    m.get_resource(id_s);
+    m.get_resource(local_id);
     
     for (int i=0; i<2; i++) begin
       assert(s.randomize());
       data_s = s.data;
       s.display();
-      $display("Second run and sem %0d occupied: data = %0d, time = %0t", id_s, data_s, $time);
+      $display("Second run and sem %0d occupied: data = %0d, time = %0t", local_id, data_s, $time);
       #10;
     end
     
     // Release semaphore
-    m.release_resource(id_s);
-    $display("Second sem uncooupied sem id %0d, time = %0t", id_s, $time);
+    m.release_resource(local_id);
+    $display("Second sem uncooupied sem id %0d, time = %0t", local_id, $time);
     
   endtask
   
   task third_run();
+    int local_id;
     // Occupy semaphore
-    m.get_resource(id_t);
+    m.get_resource(local_id);
     
     for (int i=0; i<2; i++) begin
       assert(t.randomize());
       data_t = t.data;
       t.display();
-      $display("Third run and sem %0d occupied: data = %0d, time = %0t", id_t, data_t, $time);
+      $display("Third run and sem %0d occupied: data = %0d, time = %0t", local_id, data_t, $time);
       #10;
     end
     
     // Release semaphore
-    m.release_resource(id_t);
-    $display("Third sem uncooupied sem id %0d, time = %0t", id_t, $time);
+    m.release_resource(local_id);
+    $display("Third sem uncooupied sem id %0d, time = %0t", local_id, $time);
     
   endtask
   
