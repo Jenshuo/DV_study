@@ -179,6 +179,25 @@ module tb;
     join_none
     wait(done.triggered);
     
+    
+//    [generator::run()] 
+//       │
+//       ▼
+// call trans.copy()
+//       │
+//       ├─► Simulator check：It is a virtual function！
+//       ├─► Check handler：It is point to error object !
+//       │
+//       ▼
+// [jump to error::copy()]
+//       │
+//       ├─► 1. exec tmp = new(); (child class create its own space )
+//       ├─► 2. exec super.copy_data(tmp); (jump to parent and fill a, b, sum)
+//       ├─► 3. exec tmp.err_flag = this.err_flag; (go back to child class and fill its own err_flag)
+//       │
+//       ▼
+//[return to mailbox] Perfect error copy put to mailbox
+    
     $finish();
   end
   
