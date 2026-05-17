@@ -46,7 +46,7 @@ class monitor;
     forever begin
       tr = new();
       // Use clocking block wait for posedge clk
-      @(aif.mon_cb);
+      repeat(2) @(aif.mon_cb);
       tr.a = aif.mon_cb.a;
       tr.b = aif.mon_cb.b;
       tr.sum = aif.mon_cb.sum;
@@ -74,7 +74,7 @@ class scoreboard;
       mbx.get(tr);
       $display("[SCB] DATA RCVD FROM MON \t time: %0t", $time);
       tr.display();
-      #20;
+      #40;
     end
   endtask
   
@@ -95,9 +95,9 @@ module tb;
   // Gen & drive
   initial begin
     for(int i=0;  i<10; i++) begin
+      repeat(2) @(posedge aif.clk);
       aif.a <= $urandom_range(0, 15);
       aif.b <= $urandom_range(0, 15);
-      @(posedge aif.clk);
     end
   end
   
@@ -139,5 +139,3 @@ module tb;
   
   
 endmodule
-
-
