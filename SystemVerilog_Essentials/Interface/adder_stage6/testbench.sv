@@ -50,6 +50,7 @@ class monitor;
       tr.a = aif.mon_cb.a;
       tr.b = aif.mon_cb.b;
       tr.sum = aif.mon_cb.sum;
+      $display("-------------------------------------------------");
       $display("[MON] DATA SENT TO SCB \t time:%0t", $time);
       tr.display();
       mbx.put(tr);
@@ -69,11 +70,22 @@ class scoreboard;
   endfunction
   
   
+  task compare(transaction tr);
+    if(tr.sum == tr.a + tr.b) begin
+      $display("[SCB] DATA Result MATCHED");
+    end
+    else begin
+      $error("[SCB] DATA Result Mismatch!!");
+    end
+  endtask
+  
   task run();
     forever begin
       mbx.get(tr);
       $display("[SCB] DATA RCVD FROM MON \t time: %0t", $time);
       tr.display();
+      compare(tr);
+      $display("-------------------------------------------------");
       #40;
     end
   endtask
@@ -139,3 +151,5 @@ module tb;
   
   
 endmodule
+
+
